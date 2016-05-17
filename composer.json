@@ -1,0 +1,15 @@
+{
+  "name": "xolf/io",
+  "description": "File Database",
+  "keywords": ["database", "io", "file reader"],
+  "homepage": "https://github.com/xolf/io-db",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Xolf\\io\\": "src"
+    }
+  },
+  "require": {
+    "phpunit/phpunit": "^5.3"
+  }
+}
