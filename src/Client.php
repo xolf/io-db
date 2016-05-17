@@ -94,7 +94,14 @@ class Client
      */
     public function table($name)
     {
-        $this->setTable(new Table(new Directory($this->getDir()->getPath() . DIRECTORY_SEPARATOR . $name)));
+        if(null !== $this->getTable())
+        {
+            if ($name == $this->getTable()->info()->name)
+            {
+                return $this->getTable();
+            }
+        }
+        $this->setTable(new Table(new Directory($this->getDir()->getPath() . DIRECTORY_SEPARATOR . $name, $this->getMode())));
         return $this->getTable();
     }
 

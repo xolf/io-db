@@ -43,6 +43,16 @@ class Table
     }
 
     /**
+     * Flushes a table
+     *
+     * @throws Exception
+     */
+    public function flush()
+    {
+        $this->dir->flush();
+    }
+
+    /**
      * Returns some Information
      *
      * @return mixed
@@ -53,7 +63,7 @@ class Table
         $info['name'] = explode(DIRECTORY_SEPARATOR, $info['name']);
         $info['name'] = $info['name'][count($info['name']) - 1];
 
-        return json_encode(json_decode($info));
+        return json_decode(json_encode($info));
     }
 
 }
