@@ -6,15 +6,54 @@ class Table
 {
 
     /**
-     * @var string
+     * @var Directory
      */
-    private $name;
+    private $dir;
 
-    public function __construct($name = null)
+    public function __construct($directory)
     {
-        if($name) $this->name = $name;
+        $this->dir = $directory;
+        $this->touch();
     }
 
-    public function exists
+    /**
+     * @return Directory
+     */
+    public function getDir()
+    {
+        return $this->dir;
+    }
+
+    /**
+     * @param Directory $dir
+     */
+    public function setDir($dir)
+    {
+        $this->dir = $dir;
+    }
+
+    /**
+     * Touches a table
+     *
+     * @throws Exception
+     */
+    public function touch()
+    {
+        $this->dir->create(true);
+    }
+
+    /**
+     * Returns some Information
+     *
+     * @return mixed
+     */
+    public function info()
+    {
+        $info['name'] = $this->dir->getPath();
+        $info['name'] = explode(DIRECTORY_SEPARATOR, $info['name']);
+        $info['name'] = $info['name'][count($info['name']) - 1];
+
+        return json_encode(json_decode($info));
+    }
 
 }
