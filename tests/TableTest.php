@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/autoload.php';
 
-class ClientTest extends PHPUnit_Framework_TestCase
+class TableTest extends PHPUnit_Framework_TestCase
 {
     private $dir = __DIR__ . '/io';
 

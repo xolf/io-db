@@ -15,7 +15,9 @@ class Client
      */
     private $dir;
 
-
+    /**
+     * @var Table
+     */
     private $table;
 
     /**
@@ -61,6 +63,22 @@ class Client
     }
 
     /**
+     * @return Table
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * @param Table $table
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
+    }
+
+    /**
      * Flushes all the directory
      *
      * @throws Exception
@@ -68,6 +86,16 @@ class Client
     public function flush()
     {
         $this->getDir()->flush();
+    }
+
+    /**
+     * @param $name
+     * @return Table
+     */
+    public function table($name)
+    {
+        $this->setTable(new Table(new Directory($this->getDir()->getPath() . DIRECTORY_SEPARATOR . $name)));
+        return $this->getTable();
     }
 
 }

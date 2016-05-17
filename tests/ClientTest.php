@@ -25,4 +25,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0600, $io->getDir()->getMode());
     }
 
+    public function testSetGetTable()
+    {
+        $directory = new \Xolf\io\Directory($this->dir . DIRECTORY_SEPARATOR . 'test');
+        $table = new \Xolf\io\Table($directory);
+        $io = new \Xolf\io\Client($this->dir);
+        $io->setTable($table);
+        $this->assertEquals($table, $io->getTable());
+        $this->assertEquals($directory, $io->getTable()->getDir());
+        $io->flush();
+    }
+
 }
