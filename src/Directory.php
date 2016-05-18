@@ -50,7 +50,7 @@ class Directory
      */
     public function getMode()
     {
-        if(!$this->mode) $this->setMode(0755);
+        if(null === $this->mode) $this->setMode(0755);
         return $this->mode;
     }
 
@@ -126,7 +126,7 @@ class Directory
             rmdir($this->getPath());
             return $this;
         }
-        throw new Exception("Directory could not be flushed: " . $this->getPath());
+        return false;
     }
 
 }

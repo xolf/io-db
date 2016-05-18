@@ -10,6 +10,11 @@ class Table
      */
     private $dir;
 
+    /**
+     * Ending for the files
+     */
+    const ENDING = '.json';
+
     public function __construct($directory)
     {
         $this->dir = $directory;
@@ -53,17 +58,50 @@ class Table
     }
 
     /**
+     * Gets the Path for documents
+     *
+     * @param $document
+     * @return string
+     */
+    public function getDocumentPath($document)
+    {
+        return $this->dir->getPath() . DIRECTORY_SEPARATOR . $document . self::ENDING;
+    }
+
+    /**
+     * Gets document
+     *
+     * @param $name
+     * @return Document
+     */
+    public function document($name)
+    {
+        return new Document($name, $this);
+    }
+
+    /**
+     * Gives the table name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        $name = $this->dir->getPath();
+        $name = explode(DIRECTORY_SEPARATOR, $name);
+        $name = $name[count($name) - 1];
+        return $name;
+    }
+
+    /**
      * Returns some Information
      *
      * @return mixed
      */
     public function info()
     {
-        $info['name'] = $this->dir->getPath();
-        $info['name'] = explode(DIRECTORY_SEPARATOR, $info['name']);
-        $info['name'] = $info['name'][count($info['name']) - 1];
-
-        return json_decode(json_encode($info));
+        return json_decode(json_encode([
+            'name' => $this->getName()
+        ]));
     }
 
 }

@@ -45,6 +45,23 @@ class ClientTest extends PHPUnit_Framework_TestCase
             $io->table('test' . $o);
             $this->assertTrue(is_dir($this->dir . DIRECTORY_SEPARATOR . 'test' . $o));
         }
+        for($i = 1; $i <= 1000; $i++)
+        {
+            $o = round($i / 1);
+            $io->table('test' . $o)->flush();
+            $this->assertFalse(is_dir($this->dir . DIRECTORY_SEPARATOR . 'test' . $o));
+        }
+        $io->flush();
+    }
+
+    public function testDocument()
+    {
+        $io = new \Xolf\io\Client($this->dir);
+        //var_dump($io->table('test')->document('test'));
+        $io->table('test')->document('test')->write(['test' => true]);
+        var_dump($io->table('test')->document('test'));
+        die;
+        sleep(20);
         $io->flush();
     }
 

@@ -96,7 +96,7 @@ class Client
     {
         if(null !== $this->getTable())
         {
-            if ($name == $this->getTable()->info()->name)
+            if ($name == $this->getTable()->getName())
             {
                 return $this->getTable();
             }
