@@ -115,7 +115,10 @@ class Table
                         $name = explode(DIRECTORY_SEPARATOR, $file->getRealPath());
                         $name = $name[count($name) - 1];
                         $name = str_replace('.json', '', $name);
-                        $info['document'][] = $name;
+                        $info['document'][] = [
+                            'name' => $name,
+                            'id' => sha1_file($file->getRealPath())
+                        ];
                         $i++;
                     }
                 }
