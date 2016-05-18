@@ -9,7 +9,7 @@
       "Xolf\\io\\": "src"
     }
   },
-  "dev-require": {
+  "require-dev": {
     "phpunit/phpunit": "^5.3"
   }
 }
