@@ -99,9 +99,35 @@ class Table
      */
     public function info()
     {
-        return json_decode(json_encode([
-            'name' => $this->getName()
-        ]));
+        $info = [];
+
+        $i = 0;
+        $it = new RecursiveDirectoryIterator($this->getPath(), RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach($files as $file) {
+            if (!$file->isDir()){
+                $ending = explode('.', $file->getRealPath());
+                if(isset($ending[1]))
+                {
+                    $ending = $ending[1];
+                    if($ending == 'json')
+                    {
+                        $name = explode(DIRECTORY_SEPARATOR, $file->getRealPath());
+                        $name = $name[count($name) - 1];
+                        $name = str_replace('.json', '', $name);
+                        $info['document'][] = $name;
+                        $i++;
+                    }
+                }
+            }
+        }
+
+        $info['documents'] = $i;
+
+        $info['name'] = $this->getName();
+        $info['path'] = $this->getDir()->getPath();
+
+        return json_decode(json_encode($info));
     }
 
 }
