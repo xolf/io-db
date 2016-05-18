@@ -27,7 +27,7 @@ class Document
     public function __construct($name, Table $table)
     {
         $this->setName($name);
-        $this->setPath($table->getDocumentPath($name));
+        $this->setPath($table->getDocumentPath($this->getName()));
         $this->read();
         return $this;
     }
@@ -62,6 +62,8 @@ class Document
     private function setName($name)
     {
         $this->_name = $name;
+        $this->_name = str_replace('/', '', $this->_name);
+        $this->_name = str_replace(':', '-', $this->_name);
     }
 
     /**
