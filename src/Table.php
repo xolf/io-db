@@ -102,8 +102,8 @@ class Table
         $info = [];
 
         $i = 0;
-        $it = new RecursiveDirectoryIterator($this->getDir()->getPath(), RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+        $it = new \RecursiveDirectoryIterator($this->getDir()->getPath(), \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach($files as $file) {
             if (!$file->isDir()){
                 $ending = explode('.', $file->getRealPath());

@@ -114,8 +114,8 @@ class Directory
     {
         if($this->exists())
         {
-            $it = new RecursiveDirectoryIterator($this->getPath(), RecursiveDirectoryIterator::SKIP_DOTS);
-            $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+            $it = new \RecursiveDirectoryIterator($this->getPath(), \RecursiveDirectoryIterator::SKIP_DOTS);
+            $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
             foreach($files as $file) {
                 if ($file->isDir()){
                     rmdir($file->getRealPath());
