@@ -7,14 +7,17 @@ class Document
     /**
      * @var string
      */
-    private $name;
+    private $_name;
 
     /**
      * @var string
      */
-    private $path;
+    private $_path;
 
-    private $handler;
+    /**
+     * @var array
+     */
+    private $_data = [];
 
     /**
      * Document constructor.
@@ -34,7 +37,7 @@ class Document
      */
     private function getPath()
     {
-        return $this->path;
+        return $this->_path;
     }
 
     /**
@@ -42,7 +45,7 @@ class Document
      */
     private function setPath($path)
     {
-        $this->path = $path;
+        $this->_path = $path;
     }
 
     /**
@@ -50,7 +53,7 @@ class Document
      */
     private function getName()
     {
-        return $this->name;
+        return $this->_name;
     }
 
     /**
@@ -58,23 +61,31 @@ class Document
      */
     private function setName($name)
     {
-        $this->name = $name;
+        $this->_name = $name;
     }
 
     /**
      * @return mixed
      */
-    private function getHandler()
+    public function getData()
     {
-        return $this->handler;
+        return $this->_data;
     }
 
     /**
-     * @param mixed $handler
+     * @param mixed $data
      */
-    private function setHandler($handler)
+    public function setData($data)
     {
-        $this->handler = $handler;
+        if(null === $data)
+        {
+            $data = [];
+        }
+        if(is_object($data))
+        {
+            $data = json_decode(json_encode($data), true);
+        }
+        $this->_data = $data;
     }
 
     /**
@@ -89,14 +100,6 @@ class Document
     }
 
     /**
-     * Opens a document
-     */
-    public function open()
-    {
-        $this->setHandler(fopen($this->getPath(), "w"));
-    }
-
-    /**
      * Reads a document
      *
      * @return null
@@ -105,10 +108,10 @@ class Document
     {
         if(file_exists($this->getPath()) && filesize($this->getPath()) > 0)
         {
-            $this->open();
-            $data = fread($this->getHandler(), filesize($this->getPath()));
+            $data = file_get_contents($this->getPath());
             if(trim($data) == "") $data = "{}";
             $data = json_decode($data);
+            $this->setData($data);
             foreach ($data as $key => $value)
             {
                 $this->$key = $value;
@@ -120,35 +123,19 @@ class Document
     /**
      * Writes a document
      *
-     * @param $content
+     * @param $content array
      */
-    public function write($content)
+    public function write(array $content)
     {
-
-        var_dump((array) $this);
-
         if(!is_string($content))
         {
             $content = json_encode($content);
         }
-
-        var_dump($content);
+        $content = json_decode($content, true);
+        $this->setData(array_merge($this->getData(), $content));
 
         $this->flush();
-        $this->open();
-        fwrite($this->getHandler(), $content);
-        $this->close();
-    }
-
-    /**
-     * Close the handler
-     */
-    public function close()
-    {
-        if(null !== $this->getHandler())
-        {
-            fclose($this->getHandler());
-        }
+        file_put_contents($this->getPath(), json_encode($this->getData()));
     }
 
 }
