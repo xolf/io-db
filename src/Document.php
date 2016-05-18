@@ -141,4 +141,19 @@ class Document
         file_put_contents($this->getPath(), json_encode($this->getData()));
     }
 
+    /**
+     * Moves a document to a table
+     *
+     * @param Table $table
+     * @return $this
+     */
+    public function moveTo(Table $table)
+    {
+        $this->read();
+        $this->flush();
+        $this->setPath($table->getDocumentPath($this->getName()));
+        $this->write([]);
+        return $this;
+    }
+
 }
