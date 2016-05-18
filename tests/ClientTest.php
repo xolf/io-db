@@ -81,7 +81,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals('test: ' . $d, $io->table($t)->document($d)->running_test);
             }
         }
-        var_dump($io->table(1000)->info());
+        var_dump($io->table(100)->info()->document);
         $io->flush();
     }
 
