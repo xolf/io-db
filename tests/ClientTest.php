@@ -76,7 +76,6 @@ class ClientTest extends PHPUnit_Framework_TestCase
         for($t = 1; $t <= $limit; $t++)
         {
             $this->assertEquals($limit, $io->table($t)->info()->documents);
-            $this->assertEquals("12", $io->table($t)->info()->document[4]->name);
             for($d = 1; $d <= $limit; $d++)
             {
                 $this->assertEquals('test: ' . $d, $io->table($t)->document($d)->running_test);
