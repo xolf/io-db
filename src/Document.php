@@ -69,6 +69,7 @@ class Document
         $this->_name = str_replace(';', '', $this->_name);
         $this->_name = str_replace('}', '', $this->_name);
         $this->_name = str_replace('{', '', $this->_name);
+        $this->_name = str_replace("\n", '', $this->_name);
         $this->_name = str_replace(':', '-', $this->_name);
         $this->_name = str_replace('.', '-', $this->_name);
     }
