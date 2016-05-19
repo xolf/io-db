@@ -76,7 +76,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         for($t = 1; $t <= $limit; $t++)
         {
             $this->assertEquals($limit, $io->table($t)->info()->documents);
-            $this->assertEquals("5", $io->table($t)->info()->document[4]->name);
+            $this->assertEquals("12", $io->table($t)->info()->document[4]->name);
             for($d = 1; $d <= $limit; $d++)
             {
                 $this->assertEquals('test: ' . $d, $io->table($t)->document($d)->running_test);
@@ -85,13 +85,28 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $io->flush();
     }
 
-    public function testWhere()
+    public function testWhere1()
     {
         $io = new \Xolf\io\Client($this->dir);
-        $test_table = $io->table('test');
-        $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com']);
-        $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com']);
-        $this->assertEquals($test_table->document('tourner'), $test_table->documents()->where(['name','=','Tourner']));
+        $test_table = $io->table('user');
+
+        $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com', 'city' => 'Munich']);
+        $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+
+        $this->assertEquals([$test_table->document('tourner')], $test_table->documents()->where(['name'=>'Tourner']));
+        $io->flush();
+    }
+
+    public function testWhere2()
+    {
+        $io = new \Xolf\io\Client($this->dir);
+        $test_table = $io->table('user');
+
+        $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com', 'city' => 'Munich']);
+        $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+
+        $this->assertEquals($test_table->getAllDocuments(), $test_table->documents()->where(['city'=>'Munich']));
+        $io->flush();
     }
 
 }

@@ -108,7 +108,7 @@ class Finder
      */
     private function addDocument(Document $document)
     {
-        $this->documents[] = $document;
+        if(!in_array($document, $this->getDocuments())) $this->documents[] = $document;
     }
 
     public function search($query)
@@ -121,42 +121,28 @@ class Finder
      */
     private function __polishWhereStatement(array $statement)
     {
-        if(isset($statement[0]) && isset($statement[1]))
-        {
-            $statement['field'] = $statement[0];
-            if(!isset($statement[2]))
-            {
-                $statement['value'] = $statement[1];
-                $this->setClause(self::EXACT_CLAUSE);
-            }
-            else if(isset($statement[2]))
-            {
-                $statement['clause'] = $statement[1];
-                $statement['value'] = $statement[2];
-            }
-        }
-        else if(count($statement) > 0)
+        if(count($statement) > 0)
         {
             foreach ($statement as $field => $value)
             {
                 if(!is_int($field))
                 {
+
+                    $this->setClause(self::EXACT_CLAUSE);
+
                     if(isset($field) && isset($value))
                     {
-                        $statement['field'] = $field;
-                        $statement['value'] = $value;
+                        $state[] = ['field' => $field, 'value' => $value];
                     }
                 }
             }
-        }
-        if(isset($statement['field']))
-        {
-            return json_decode(json_encode($statement));
         }
         else
         {
             throw new Exception("Unknow statment structure " . var_export($statement, true));
         }
+
+        return json_decode(json_encode($state));
     }
 
     /**
@@ -170,11 +156,13 @@ class Finder
             $documents = $this->getTable()->getAllDocuments();
             foreach ($documents as $document)
             {
-                $key = $this->getStatement()['field'];
-                $value = $this->getStatement()['value'];
-                if($document->$key == $value)
+                foreach ($this->getStatement() as $i => $statement)
                 {
-                    $this->addDocument($document);
+                    $field = $statement->field;
+                    if($document->$field == $statement->value)
+                    {
+                        $this->addDocument($document);
+                    }
                 }
             }
         }
