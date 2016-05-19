@@ -80,6 +80,30 @@ class Table
     }
 
     /**
+     * @return Finder
+     */
+    public function documents()
+    {
+        return new Finder($this);
+    }
+
+    /**
+     * Gets all Documents in a table
+     *
+     * @return array
+     */
+    public function getAllDocuments()
+    {
+        $documents = $this->info()->document;
+        $return = [];
+        foreach ($documents as $document)
+        {
+            $return[] = new Document($document->name, $this);
+        }
+        return $return;
+    }
+
+    /**
      * Gives the table name
      *
      * @return string

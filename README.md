@@ -17,3 +17,10 @@ $user = $io->table('user')->document('admin')->write(['password' => 123456]);
 
 echo $user->name . ' Password: ' . $user->password;
 ```
+
+### Find Documents
+```php
+$users = $io->table('user')->documents()->where(['rights' => 'admin']);
+
+var_dump($users);
+```

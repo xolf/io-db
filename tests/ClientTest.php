@@ -85,4 +85,13 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $io->flush();
     }
 
+    public function testWhere()
+    {
+        $io = new \Xolf\io\Client($this->dir);
+        $test_table = $io->table('test');
+        $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com']);
+        $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com']);
+        $this->assertEquals($test_table->document('tourner'), $test_table->documents()->where(['name','=','Tourner']));
+    }
+
 }
