@@ -94,6 +94,7 @@ class Table
      */
     public function getAllDocuments()
     {
+        if(!isset($this->info()->document)) return [];
         $documents = $this->info()->document;
         $return = [];
         foreach ($documents as $document)
