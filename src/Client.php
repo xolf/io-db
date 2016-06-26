@@ -24,8 +24,9 @@ class Client
      * Client constructor.
      * @param string $dir
      */
-    public function __construct($dir = __DIR__ . '/../../../io-db')
+    public function __construct($dir = false)
     {
+        if(!$dir) $dir = __DIR__ . '/../../../io-db';
         $this->dir = new Directory($dir);
     }
 
