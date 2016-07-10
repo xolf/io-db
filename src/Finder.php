@@ -108,7 +108,7 @@ class Finder
      */
     private function addDocument(Document $document)
     {
-        if(!in_array($document, $this->getDocuments())) $this->documents[] = $document;
+        if(!in_array($document, $this->getDocuments())) $this->documents[$document->getName()] = $document;
     }
 
     public function search($query)

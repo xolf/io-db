@@ -99,8 +99,9 @@ class Table
         $return = [];
         foreach ($documents as $document)
         {
-            $return[] = new Document($document->name, $this);
+            $return[$document->name] = new Document($document->name, $this);
         }
+        ksort($return);
         return $return;
     }
 

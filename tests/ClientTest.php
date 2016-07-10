@@ -92,7 +92,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com', 'city' => 'Munich']);
         $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
 
-        $this->assertEquals([$test_table->document('tourner')], $test_table->documents()->where(['name'=>'Tourner']));
+        $this->assertEquals(['tourner' => $test_table->document('tourner')], $test_table->documents()->where(['name'=>'Tourner']));
         $io->flush();
     }
 
@@ -103,6 +103,22 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         $test_table->document('hendrix')->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com', 'city' => 'Munich']);
         $test_table->document('tourner')->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+        $test_table->document('anapher')->write(['name' => 'Anapher', 'mail' => 'anapher@gmail.com', 'city' => 'Munich']);
+
+        $this->assertEquals($test_table->getAllDocuments(), $test_table->documents()->where(['city'=>'Munich']));
+        $io->flush();
+    }
+
+    public function testWhere3()
+    {
+        $io = new \Xolf\io\Client($this->dir);
+        $test_table = $io->table('inc');
+
+        $test_table->document(120160625)->write(['name' => 'Hendrix', 'mail' => 'hendrix@gmail.com', 'city' => 'Munich']);
+        $test_table->document(2016)->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+        $test_table->document(301)->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+        $test_table->document(40)->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
+        $test_table->document(5)->write(['name' => 'Tourner', 'mail' => 'tourner@gmail.com', 'city' => 'Munich']);
 
         $this->assertEquals($test_table->getAllDocuments(), $test_table->documents()->where(['city'=>'Munich']));
         $io->flush();

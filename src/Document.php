@@ -51,7 +51,7 @@ class Document
     /**
      * @return mixed
      */
-    private function getName()
+    public function getName()
     {
         return $this->_name;
     }
