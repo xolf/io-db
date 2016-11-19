@@ -28,6 +28,7 @@ class Client
     {
         if(!$dir) $dir = __DIR__ . '/../../../io-db';
         $this->dir = new Directory($dir);
+        $this->dir->create(true);
     }
 
     /**
