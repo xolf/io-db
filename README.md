@@ -2,6 +2,8 @@
 
 # io-db
 #### Easy setup within 30 seconds
+composer require xolf/io-db
+
 A static json database system
 
 ### Fetch documents from the database
