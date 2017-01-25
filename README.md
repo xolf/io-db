@@ -1,8 +1,7 @@
 [![Build Status](https://travis-ci.org/xolf/io-db.svg?branch=master)](https://travis-ci.org/xolf/io-db)
 
 # io-db
-#### Easy setup within 30 seconds
-composer require xolf/io-db
+#### Easy setup within 30 seconds ´composer require xolf/io-db´
 
 A static json database system
 
