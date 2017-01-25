@@ -90,7 +90,7 @@ class Table
     /**
      * Gets all Documents in a table
      *
-     * @return array
+     * @return Document[]
      */
     public function getAllDocuments()
     {
