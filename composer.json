@@ -8,8 +8,5 @@
     "psr-4": {
       "Xolf\\io\\": "src"
     }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "*"
   }
 }
