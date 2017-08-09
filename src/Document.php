@@ -120,7 +120,7 @@ class Document
         {
             $data = file_get_contents($this->getPath());
             if(trim($data) == "") $data = "{}";
-            $data = json_decode($data);
+            $data = json_decode($data, true);
             $this->setData($data);
             foreach ($data as $key => $value)
             {
