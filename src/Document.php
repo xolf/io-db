@@ -105,7 +105,11 @@ class Document
     {
         if(file_exists($this->getPath()))
         {
-            unlink($this->getPath());
+            $success = unlink($this->getPath());
+            if(false === $success) 
+            {
+                throw new \Exception("Can't delete ".$this->getPath());
+            }
         }
     }
 
